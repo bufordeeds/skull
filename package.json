@@ -1,0 +1,39 @@
+{
+	"name": "skull",
+	"version": "1.0.0",
+	"description": "Skull Digital is a digital adaptation of the classic bluffing game Skull, designed for mobile devices.",
+	"private": true,
+	"workspaces": [
+		"client"
+	],
+	"scripts": {
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"client": "yarn workspace client start",
+		"server": "cd server && deno task dev",
+		"test": "yarn workspace client test && cd server && deno task test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bufordeeds/skull.git"
+	},
+	"keywords": [
+		"game",
+		"multiplayer",
+		"react-native",
+		"deno",
+		"socket.io"
+	],
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/bufordeeds/skull/issues"
+	},
+	"homepage": "https://github.com/bufordeeds/skull#readme",
+	"devDependencies": {
+		"eslint": "^8.42.0",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-native": "^4.0.0"
+	}
+}

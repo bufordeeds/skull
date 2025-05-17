@@ -1,0 +1,9 @@
+{
+	"name": "client",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Skull game client (placeholder)",
+	"scripts": {
+		"start": "echo 'Client not implemented yet'"
+	}
+}

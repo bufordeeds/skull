@@ -6,7 +6,8 @@ This document provides information for developers working on the Skull Digital p
 
 ### Prerequisites
 
--   Node.js (v16+)
+-   [Deno](https://deno.land/) (v1.32.0+) for the backend
+-   Node.js (v16+) for the frontend
 -   npm or yarn
 -   Expo CLI (`npm install -g expo-cli`)
 -   A mobile device or emulator for testing
@@ -39,7 +40,6 @@ This document provides information for developers working on the Skull Digital p
 
 3. Set up environment variables:
 
-    - Create a `.env` file in the server directory based on `.env.example`
     - Create a `.env` file in the client directory based on `.env.example`
 
 4. Start the development servers:
@@ -47,7 +47,7 @@ This document provides information for developers working on the Skull Digital p
     ```bash
     # Start the backend server
     cd server
-    npm run dev
+    deno task dev
 
     # In a new terminal, start the Expo client
     cd client
@@ -73,16 +73,16 @@ skull/
 │   ├── services/           # API services
 │   └── App.js              # Entry point
 │
-├── server/                 # Node.js backend
+├── server/                 # Deno backend
 │   ├── src/
-│   │   ├── controllers/    # Request handlers
-│   │   ├── models/         # Data models
-│   │   ├── routes/         # API routes
-│   │   ├── services/       # Business logic
+│   │   ├── game/           # Game logic
+│   │   ├── room/           # Room management
+│   │   ├── player/         # Player management
 │   │   ├── socket/         # Socket.io handlers
 │   │   └── utils/          # Utility functions
-│   ├── index.js            # Entry point
-│   └── package.json
+│   ├── main.ts             # Entry point
+│   ├── deno.json           # Deno configuration
+│   └── import_map.json     # Import map
 │
 ├── shared/                 # Shared code between client and server
 │   ├── constants/          # Shared constants
@@ -134,7 +134,7 @@ npm test
 
 # Run server tests
 cd server
-npm test
+deno task test
 
 # Run all tests from root
 npm test
@@ -154,8 +154,8 @@ Aim for at least 80% test coverage for critical game logic components.
 
 ### Server
 
--   Development: Local Node.js server
--   Staging/Production: (To be determined)
+-   Development: Local Deno server
+-   Staging/Production: Deno Deploy (recommended)
 
 ## Troubleshooting
 
@@ -171,10 +171,12 @@ Aim for at least 80% test coverage for critical game logic components.
 -   Check that the server is running
 -   Verify the socket connection URL in the client config
 -   Ensure firewalls aren't blocking WebSocket connections
+-   If using Deno Deploy, ensure your deployment has WebSocket support enabled
 
 ## Resources
 
 -   [React Native Documentation](https://reactnative.dev/docs/getting-started)
 -   [Expo Documentation](https://docs.expo.dev/)
 -   [Socket.io Documentation](https://socket.io/docs/v4/)
--   [Node.js Documentation](https://nodejs.org/en/docs/)
+-   [Deno Documentation](https://deno.land/manual)
+-   [Deno Deploy Documentation](https://deno.com/deploy/docs)

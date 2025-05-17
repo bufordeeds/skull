@@ -14,9 +14,9 @@ Skull Digital is a digital adaptation of the classic bluffing game Skull, design
 ## Tech Stack
 
 -   Frontend: React Native (Expo)
--   Backend: Node.js + Socket.io
+-   Backend: Deno + Socket.io
 -   State Sync: Real-time multiplayer using room codes
--   Deployment: (To be determined)
+-   Deployment: Deno Deploy (recommended)
 
 ## Features
 

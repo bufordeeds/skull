@@ -10,7 +10,7 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"client": "yarn workspace client start",
-		"server": "cd server && deno task dev",
+		"server": "deno task --cwd=server dev",
 		"test": "yarn workspace client test && cd server && deno task test"
 	},
 	"repository": {

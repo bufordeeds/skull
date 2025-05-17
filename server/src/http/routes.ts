@@ -18,6 +18,50 @@ export async function handleHttpRequest(
 
 	logger.info(`HTTP ${method} ${path}`);
 
+	// Root path - Welcome page / API documentation
+	if (path === '/' && method === 'GET') {
+		return new Response(
+			JSON.stringify({
+				name: 'Skull Game API',
+				version: '1.0.0',
+				description: 'API for the Skull card game',
+				endpoints: [
+					{
+						path: '/api/health',
+						method: 'GET',
+						description: 'Health check endpoint'
+					},
+					{
+						path: '/api/rooms',
+						method: 'GET',
+						description: 'Get all rooms'
+					},
+					{
+						path: '/api/rooms',
+						method: 'POST',
+						description: 'Create a new room'
+					},
+					{
+						path: '/api/rooms/:roomCode',
+						method: 'GET',
+						description: 'Get room details'
+					},
+					{
+						path: '/api/stats',
+						method: 'GET',
+						description: 'Get server stats'
+					}
+				]
+			}),
+			{
+				status: 200,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}
+		);
+	}
+
 	// Health check endpoint
 	if (path === '/api/health' && method === 'GET') {
 		return new Response(

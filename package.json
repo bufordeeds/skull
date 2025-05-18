@@ -7,9 +7,10 @@
     "client"
   ],
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "client": "deno task --cwd=client dev",
+    "commit": "git-cz",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint .",
     "server": "deno task --cwd=server dev",
     "test": "deno task --cwd=server test --no-check"
   },
@@ -31,10 +32,16 @@
   },
   "homepage": "https://github.com/bufordeeds/skull#readme",
   "devDependencies": {
+    "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
+    "commitizen": "^4.3.1",
     "eslint": "^8.42.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-native": "^4.0.0",
-    "commitizen": "^4.3.1"
+    "eslint-plugin-react-native": "^4.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@digitalroute/cz-conventional-changelog-for-jira"
+    }
   }
 }

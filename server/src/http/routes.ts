@@ -1,5 +1,6 @@
 import { RoomManager } from "../room/roomManager.ts";
 import { logger } from "../utils/logger.ts";
+import { GameState } from "../game/state.ts";
 
 /**
  * Handles HTTP requests and routes them to the appropriate handler

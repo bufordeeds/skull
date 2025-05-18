@@ -222,7 +222,7 @@ export class GameState {
    */
   flipCard(
     playerId: string,
-    targetPlayerId: string
+    targetPlayerId: string,
   ): { success: boolean; result?: "rose" | "skull" } {
     // Validate it's the player's turn and we're in flipping phase
     if (
@@ -339,15 +339,17 @@ export class GameState {
    * Converts the game state to a JSON-serializable object
    * @returns The game state as a plain object
    */
-  toJSON(): Pick<
-    GameState,
-    | "gamePhase"
-    | "currentPlayerId"
-    | "currentBid"
-    | "highestBidderId"
-    | "cardsFlipped"
-    | "round"
-  > & { players: Player[] } {
+  toJSON():
+    & Pick<
+      GameState,
+      | "gamePhase"
+      | "currentPlayerId"
+      | "currentBid"
+      | "highestBidderId"
+      | "cardsFlipped"
+      | "round"
+    >
+    & { players: Player[] } {
     return {
       players: Array.from(this.players.values()),
       gamePhase: this.gamePhase,

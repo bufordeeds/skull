@@ -13,7 +13,7 @@
     "fmt": "deno fmt",
     "lint": "deno lint",
     "server": "deno task --cwd=server dev",
-    "test": "deno task --cwd=server test --no-check"
+    "test": "deno task --cwd=server test"
   },
   "repository": {
     "type": "git",

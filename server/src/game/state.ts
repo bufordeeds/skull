@@ -119,10 +119,7 @@ export class GameState {
    */
   placeCard(playerId: string, cardType: "rose" | "skull"): boolean {
     // Validate it's the player's turn and we're in placement phase
-    if (
-      playerId !== this.currentPlayerId ||
-      this.gamePhase !== "placement"
-    ) {
+    if (playerId !== this.currentPlayerId || this.gamePhase !== "placement") {
       return false;
     }
 
@@ -225,7 +222,7 @@ export class GameState {
    */
   flipCard(
     playerId: string,
-    targetPlayerId: string,
+    targetPlayerId: string
   ): { success: boolean; result?: "rose" | "skull" } {
     // Validate it's the player's turn and we're in flipping phase
     if (
@@ -315,7 +312,7 @@ export class GameState {
       this.nextPlayer();
     } else if (this.players.size > 0) {
       // If there's no current player but there are players, set the first one
-      this.currentPlayerId = this.players.values().next().value.id;
+      this.currentPlayerId = this.players.values().next().value?.id || null;
     }
   }
 
@@ -342,7 +339,15 @@ export class GameState {
    * Converts the game state to a JSON-serializable object
    * @returns The game state as a plain object
    */
-  toJSON(): Record<string, unknown> {
+  toJSON(): Pick<
+    GameState,
+    | "gamePhase"
+    | "currentPlayerId"
+    | "currentBid"
+    | "highestBidderId"
+    | "cardsFlipped"
+    | "round"
+  > & { players: Player[] } {
     return {
       players: Array.from(this.players.values()),
       gamePhase: this.gamePhase,

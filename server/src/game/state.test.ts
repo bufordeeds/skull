@@ -6,7 +6,7 @@ Deno.test("GameState - Player Management", async (t) => {
     const gameState = new GameState();
 
     // Add first player
-    const result1 = gameState.addPlayer("player1", "Alice");
+    const result1 = gameState.addPlayer("player1", "John");
     assertEquals(result1, true);
     assertEquals(gameState.players.size, 1);
     assertEquals(gameState.currentPlayerId, "player1");

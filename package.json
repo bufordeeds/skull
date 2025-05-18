@@ -7,10 +7,11 @@
     "client"
   ],
   "scripts": {
+    "check": "deno fmt && deno lint",
     "client": "deno task --cwd=client dev",
     "commit": "git-cz",
-    "lint:fix": "eslint . --fix",
-    "lint": "eslint .",
+    "fmt": "deno fmt",
+    "lint": "deno lint",
     "server": "deno task --cwd=server dev",
     "test": "deno task --cwd=server test --no-check"
   },

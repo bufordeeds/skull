@@ -1,11 +1,11 @@
 {
-	"imports": {
-		"std/": "https://deno.land/std@0.220.0/",
-		"socket.io/": "https://deno.land/x/socket_io@0.2.0/",
-		"game/": "./src/game/",
-		"room/": "./src/room/",
-		"player/": "./src/player/",
-		"socket/": "./src/socket/",
-		"utils/": "./src/utils/"
-	}
+  "imports": {
+    "std/": "https://deno.land/std@0.220.0/",
+    "socket.io/": "https://deno.land/x/socket_io@0.2.0/",
+    "game/": "./src/game/",
+    "room/": "./src/room/",
+    "player/": "./src/player/",
+    "socket/": "./src/socket/",
+    "utils/": "./src/utils/"
+  }
 }

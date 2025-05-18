@@ -5,22 +5,22 @@
 
 // Log levels
 export enum LogLevel {
-	DEBUG = 'DEBUG',
-	INFO = 'INFO',
-	WARN = 'WARN',
-	ERROR = 'ERROR'
+  DEBUG = "DEBUG",
+  INFO = "INFO",
+  WARN = "WARN",
+  ERROR = "ERROR",
 }
 
 // Logger configuration
 interface LoggerConfig {
-	minLevel: LogLevel;
-	includeTimestamp: boolean;
+  minLevel: LogLevel;
+  includeTimestamp: boolean;
 }
 
 // Default configuration
 const defaultConfig: LoggerConfig = {
-	minLevel: LogLevel.INFO,
-	includeTimestamp: true
+  minLevel: LogLevel.INFO,
+  includeTimestamp: true,
 };
 
 // Current configuration
@@ -34,14 +34,14 @@ let config = { ...defaultConfig };
  * @returns Formatted log message
  */
 function formatLogMessage(
-	level: LogLevel,
-	message: string,
-	...data: unknown[]
+  level: LogLevel,
+  message: string,
+  ..._data: unknown[]
 ): string {
-	const timestamp = config.includeTimestamp
-		? `[${new Date().toISOString()}] `
-		: '';
-	return `${timestamp}[${level}] ${message}`;
+  const timestamp = config.includeTimestamp
+    ? `[${new Date().toISOString()}] `
+    : "";
+  return `${timestamp}[${level}] ${message}`;
 }
 
 /**
@@ -50,10 +50,10 @@ function formatLogMessage(
  * @returns True if the log should be displayed
  */
 function shouldLog(level: LogLevel): boolean {
-	const levels = Object.values(LogLevel);
-	const minLevelIndex = levels.indexOf(config.minLevel);
-	const currentLevelIndex = levels.indexOf(level);
-	return currentLevelIndex >= minLevelIndex;
+  const levels = Object.values(LogLevel);
+  const minLevelIndex = levels.indexOf(config.minLevel);
+  const currentLevelIndex = levels.indexOf(level);
+  return currentLevelIndex >= minLevelIndex;
 }
 
 /**
@@ -61,7 +61,7 @@ function shouldLog(level: LogLevel): boolean {
  * @param newConfig The new configuration
  */
 export function configureLogger(newConfig: Partial<LoggerConfig>): void {
-	config = { ...config, ...newConfig };
+  config = { ...config, ...newConfig };
 }
 
 /**
@@ -70,9 +70,9 @@ export function configureLogger(newConfig: Partial<LoggerConfig>): void {
  * @param data Additional data to log
  */
 export function debug(message: string, ...data: unknown[]): void {
-	if (shouldLog(LogLevel.DEBUG)) {
-		console.debug(formatLogMessage(LogLevel.DEBUG, message), ...data);
-	}
+  if (shouldLog(LogLevel.DEBUG)) {
+    console.debug(formatLogMessage(LogLevel.DEBUG, message), ...data);
+  }
 }
 
 /**
@@ -81,9 +81,9 @@ export function debug(message: string, ...data: unknown[]): void {
  * @param data Additional data to log
  */
 export function info(message: string, ...data: unknown[]): void {
-	if (shouldLog(LogLevel.INFO)) {
-		console.info(formatLogMessage(LogLevel.INFO, message), ...data);
-	}
+  if (shouldLog(LogLevel.INFO)) {
+    console.info(formatLogMessage(LogLevel.INFO, message), ...data);
+  }
 }
 
 /**
@@ -92,9 +92,9 @@ export function info(message: string, ...data: unknown[]): void {
  * @param data Additional data to log
  */
 export function warn(message: string, ...data: unknown[]): void {
-	if (shouldLog(LogLevel.WARN)) {
-		console.warn(formatLogMessage(LogLevel.WARN, message), ...data);
-	}
+  if (shouldLog(LogLevel.WARN)) {
+    console.warn(formatLogMessage(LogLevel.WARN, message), ...data);
+  }
 }
 
 /**
@@ -103,18 +103,18 @@ export function warn(message: string, ...data: unknown[]): void {
  * @param data Additional data to log
  */
 export function error(message: string, ...data: unknown[]): void {
-	if (shouldLog(LogLevel.ERROR)) {
-		console.error(formatLogMessage(LogLevel.ERROR, message), ...data);
-	}
+  if (shouldLog(LogLevel.ERROR)) {
+    console.error(formatLogMessage(LogLevel.ERROR, message), ...data);
+  }
 }
 
 // Export a default logger object for convenience
 export const logger = {
-	debug,
-	info,
-	warn,
-	error,
-	configureLogger
+  debug,
+  info,
+  warn,
+  error,
+  configureLogger,
 };
 
 export default logger;

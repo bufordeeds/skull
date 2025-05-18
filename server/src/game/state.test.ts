@@ -13,7 +13,7 @@ Deno.test("GameState - Player Management", async (t) => {
     assertEquals(gameState.gamePhase, "waiting");
 
     // Add second player
-    const result2 = gameState.addPlayer("player2", "Bob");
+    const result2 = gameState.addPlayer("player2", "Alice");
     assertEquals(result2, true);
     assertEquals(gameState.players.size, 2);
     assertEquals(gameState.gamePhase, "placement");

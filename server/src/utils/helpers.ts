@@ -9,7 +9,7 @@
  * @returns A random integer
  */
 export function randomInt(min: number, max: number): number {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -18,11 +18,11 @@ export function randomInt(min: number, max: number): number {
  * @returns The shuffled array
  */
 export function shuffle<T>(array: T[]): T[] {
-	for (let i = array.length - 1; i > 0; i--) {
-		const j = randomInt(0, i);
-		[array[i], array[j]] = [array[j], array[i]];
-	}
-	return array;
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = randomInt(0, i);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 /**
@@ -31,7 +31,7 @@ export function shuffle<T>(array: T[]): T[] {
  * @returns A promise that resolves after the delay
  */
 export function delay(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -40,7 +40,7 @@ export function delay(ms: number): Promise<void> {
  * @returns True if the code is valid, false otherwise
  */
 export function isValidRoomCode(code: string): boolean {
-	return /^[A-Z0-9]{4}$/.test(code);
+  return /^[A-Z0-9]{4}$/.test(code);
 }
 
 /**
@@ -49,5 +49,5 @@ export function isValidRoomCode(code: string): boolean {
  * @returns A deep copy of the object
  */
 export function deepCopy<T>(obj: T): T {
-	return JSON.parse(JSON.stringify(obj));
+  return JSON.parse(JSON.stringify(obj));
 }

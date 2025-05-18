@@ -1,92 +1,92 @@
 {
-	"info": {
-		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"name": "Skull Game API",
-		"description": "API endpoints for the Skull game server",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Health Check",
-			"request": {
-				"method": "GET",
-				"url": {
-					"raw": "http://localhost:8000/api/health",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
-					"path": ["api", "health"]
-				},
-				"description": "Check if the server is running"
-			},
-			"response": []
-		},
-		{
-			"name": "Get Server Stats",
-			"request": {
-				"method": "GET",
-				"url": {
-					"raw": "http://localhost:8000/api/stats",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
-					"path": ["api", "stats"]
-				},
-				"description": "Get statistics about the server"
-			},
-			"response": []
-		},
-		{
-			"name": "List All Rooms",
-			"request": {
-				"method": "GET",
-				"url": {
-					"raw": "http://localhost:8000/api/rooms",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
-					"path": ["api", "rooms"]
-				},
-				"description": "Get a list of all active rooms"
-			},
-			"response": []
-		},
-		{
-			"name": "Create New Room",
-			"request": {
-				"method": "POST",
-				"url": {
-					"raw": "http://localhost:8000/api/rooms",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
-					"path": ["api", "rooms"]
-				},
-				"description": "Create a new game room"
-			},
-			"response": []
-		},
-		{
-			"name": "Get Room Details",
-			"request": {
-				"method": "GET",
-				"url": {
-					"raw": "http://localhost:8000/api/rooms/{{roomCode}}",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
-					"path": ["api", "rooms", "{{roomCode}}"]
-				},
-				"description": "Get details about a specific room"
-			},
-			"response": []
-		}
-	],
-	"variable": [
-		{
-			"key": "roomCode",
-			"value": "JBSV",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Skull Game API",
+    "description": "API endpoints for the Skull game server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "health"]
+        },
+        "description": "Check if the server is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Server Stats",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/api/stats",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "stats"]
+        },
+        "description": "Get statistics about the server"
+      },
+      "response": []
+    },
+    {
+      "name": "List All Rooms",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/api/rooms",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "rooms"]
+        },
+        "description": "Get a list of all active rooms"
+      },
+      "response": []
+    },
+    {
+      "name": "Create New Room",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:8000/api/rooms",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "rooms"]
+        },
+        "description": "Create a new game room"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Room Details",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/api/rooms/{{roomCode}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "rooms", "{{roomCode}}"]
+        },
+        "description": "Get details about a specific room"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "roomCode",
+      "value": "JBSV",
+      "type": "string"
+    }
+  ]
 }

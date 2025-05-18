@@ -1,63 +1,64 @@
 # Skull — Development Guide
 
-This document provides information for developers working on the Skull Digital project.
+This document provides information for developers working on the Skull Digital
+project.
 
 ## Development Environment Setup
 
 ### Prerequisites
 
--   [Deno](https://deno.land/) (v1.32.0+) for the backend
--   Node.js (v16+) for the frontend
--   npm or yarn
--   Expo CLI (`npm install -g expo-cli`)
--   A mobile device or emulator for testing
+- [Deno](https://deno.land/) (v1.32.0+) for the backend
+- Node.js (v16+) for the frontend
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+- A mobile device or emulator for testing
 
 ### Getting Started
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/bufordeeds/skull.git
-    cd skull
-    ```
+   ```bash
+   git clone https://github.com/bufordeeds/skull.git
+   cd skull
+   ```
 
 2. Install dependencies:
 
-    ```bash
-    # Install root dependencies
-    npm install
+   ```bash
+   # Install root dependencies
+   npm install
 
-    # Install client dependencies
-    cd client
-    npm install
-    cd ..
+   # Install client dependencies
+   cd client
+   npm install
+   cd ..
 
-    # Install server dependencies
-    cd server
-    npm install
-    cd ..
-    ```
+   # Install server dependencies
+   cd server
+   npm install
+   cd ..
+   ```
 
 3. Set up environment variables:
 
-    - Create a `.env` file in the client directory based on `.env.example`
+   - Create a `.env` file in the client directory based on `.env.example`
 
 4. Start the development servers:
 
-    ```bash
-    # Start the backend server
-    cd server
-    deno task dev
+   ```bash
+   # Start the backend server
+   cd server
+   deno task dev
 
-    # In a new terminal, start the Expo client
-    cd client
-    npm start
-    ```
+   # In a new terminal, start the Expo client
+   cd client
+   npm start
+   ```
 
 5. Connect to the app:
-    - Use the Expo Go app on your physical device to scan the QR code
-    - Or press 'a' to open in an Android emulator
-    - Or press 'i' to open in an iOS simulator
+   - Use the Expo Go app on your physical device to scan the QR code
+   - Or press 'a' to open in an Android emulator
+   - Or press 'i' to open in an iOS simulator
 
 ## Project Structure
 
@@ -96,14 +97,15 @@ skull/
 
 ### Branch Naming Convention
 
--   Feature: `feature/feature-name`
--   Bug fix: `fix/bug-description`
--   Refactor: `refactor/description`
--   Documentation: `docs/description`
+- Feature: `feature/feature-name`
+- Bug fix: `fix/bug-description`
+- Refactor: `refactor/description`
+- Documentation: `docs/description`
 
 ### Commit Message Format
 
-Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+Follow the [Conventional Commits](https://www.conventionalcommits.org/)
+specification:
 
 ```
 <type>(<scope>): <description>
@@ -148,14 +150,14 @@ Aim for at least 80% test coverage for critical game logic components.
 
 ### Client (Expo)
 
--   Development builds: Expo Go app
--   Testing builds: Expo EAS Update
--   Production: Expo EAS Build + App Store/Google Play
+- Development builds: Expo Go app
+- Testing builds: Expo EAS Update
+- Production: Expo EAS Build + App Store/Google Play
 
 ### Server
 
--   Development: Local Deno server
--   Staging/Production: Deno Deploy (recommended)
+- Development: Local Deno server
+- Staging/Production: Deno Deploy (recommended)
 
 ## Troubleshooting
 
@@ -163,20 +165,20 @@ Aim for at least 80% test coverage for critical game logic components.
 
 #### Expo Connection Problems
 
--   Ensure your mobile device is on the same network as your development machine
--   Try using the tunnel connection option: `npm start -- --tunnel`
+- Ensure your mobile device is on the same network as your development machine
+- Try using the tunnel connection option: `npm start -- --tunnel`
 
 #### Socket.io Connection Issues
 
--   Check that the server is running
--   Verify the socket connection URL in the client config
--   Ensure firewalls aren't blocking WebSocket connections
--   If using Deno Deploy, ensure your deployment has WebSocket support enabled
+- Check that the server is running
+- Verify the socket connection URL in the client config
+- Ensure firewalls aren't blocking WebSocket connections
+- If using Deno Deploy, ensure your deployment has WebSocket support enabled
 
 ## Resources
 
--   [React Native Documentation](https://reactnative.dev/docs/getting-started)
--   [Expo Documentation](https://docs.expo.dev/)
--   [Socket.io Documentation](https://socket.io/docs/v4/)
--   [Deno Documentation](https://deno.land/manual)
--   [Deno Deploy Documentation](https://deno.com/deploy/docs)
+- [React Native Documentation](https://reactnative.dev/docs/getting-started)
+- [Expo Documentation](https://docs.expo.dev/)
+- [Socket.io Documentation](https://socket.io/docs/v4/)
+- [Deno Documentation](https://deno.land/manual)
+- [Deno Deploy Documentation](https://deno.com/deploy/docs)

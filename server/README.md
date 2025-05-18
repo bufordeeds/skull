@@ -1,18 +1,19 @@
 # Skull Game Server
 
-A real-time multiplayer server for the Skull card game, built with Deno and Socket.io.
+A real-time multiplayer server for the Skull card game, built with Deno and
+Socket.io.
 
 ## Features
 
--   Real-time WebSocket communication using Socket.io
--   Room-based multiplayer with unique room codes
--   Complete game logic implementation
--   Reconnection handling
--   TypeScript support
+- Real-time WebSocket communication using Socket.io
+- Room-based multiplayer with unique room codes
+- Complete game logic implementation
+- Reconnection handling
+- TypeScript support
 
 ## Prerequisites
 
--   [Deno](https://deno.land/) v1.32.0 or higher
+- [Deno](https://deno.land/) v1.32.0 or higher
 
 ## Getting Started
 
@@ -38,7 +39,8 @@ deno task start
 
 ### Deno Deploy
 
-The server is designed to be easily deployed to [Deno Deploy](https://deno.com/deploy):
+The server is designed to be easily deployed to
+[Deno Deploy](https://deno.com/deploy):
 
 1. Create a new project on Deno Deploy
 2. Link your GitHub repository
@@ -49,9 +51,9 @@ The server is designed to be easily deployed to [Deno Deploy](https://deno.com/d
 
 The server can also be deployed to:
 
--   Fly.io
--   Digital Ocean App Platform
--   Any platform that supports Deno
+- Fly.io
+- Digital Ocean App Platform
+- Any platform that supports Deno
 
 ## API Documentation
 
@@ -112,14 +114,15 @@ server/
 
 ## Game Rules
 
--   Each player has 3 roses and 1 skull
--   Players take turns placing cards face-down in front of them
--   Once at least one card has been placed by each player, bidding can begin
--   Players bid on how many cards they think they can flip without revealing a skull
--   The highest bidder must flip that many cards, starting with their own
--   If they succeed, they score a point
--   If they reveal a skull, they lose a card
--   First player to 2 points wins
+- Each player has 3 roses and 1 skull
+- Players take turns placing cards face-down in front of them
+- Once at least one card has been placed by each player, bidding can begin
+- Players bid on how many cards they think they can flip without revealing a
+  skull
+- The highest bidder must flip that many cards, starting with their own
+- If they succeed, they score a point
+- If they reveal a skull, they lose a card
+- First player to 2 points wins
 
 ## License
 

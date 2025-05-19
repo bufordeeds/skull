@@ -58,10 +58,11 @@ const styles = StyleSheet.create({
   buttonContent: {
     paddingVertical: 6,
   },
-  primary: {
-  },
+  primary: {},
   secondary: {
     backgroundColor: "#fff",
   },
   tertiary: {},
 });
+
+export default Button;

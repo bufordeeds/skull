@@ -29,6 +29,7 @@ const PasswordInput = (props: TextInputProps) => {
 const EmailInput = (props: TextInputProps) => {
   return (
     <PaperTextInput
+      {...props}
       label={props.label || "Email"}
       keyboardType="email-address"
       autoCapitalize="none"
@@ -38,7 +39,6 @@ const EmailInput = (props: TextInputProps) => {
 
 export const TextInput = ({
   kind,
-  label = "Text",
   ...props
 }: TextInputProps) => {
   switch (kind) {
@@ -47,9 +47,11 @@ export const TextInput = ({
     case "email":
       return <EmailInput {...props} />;
   }
-  return <PaperTextInput {...props} label={label} />;
+  return <PaperTextInput {...props} label={props.label || "Text"} />;
 };
 
 TextInput.Icon = (props: TextInputIconProps) => {
   return <PaperTextInput.Icon {...props} />;
 };
+
+export default TextInput;

@@ -1,7 +1,8 @@
-import { View, ViewStyle, StyleSheet } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { AppTheme } from "@/app/theme/themes";
+import { View, ViewStyle } from "react-native";
+import { useTheme } from "react-native-paper";
 
-type MainVariant = 'default' | 'centered' | 'padded';
+type MainVariant = "default" | "centered" | "padded";
 
 interface MainProps {
   children: React.ReactNode;
@@ -9,16 +10,16 @@ interface MainProps {
   style?: ViewStyle;
 }
 
-const getVariantStyles = (variant: MainVariant, theme: any): ViewStyle => {
+const getVariantStyles = (variant: MainVariant, theme: AppTheme): ViewStyle => {
   switch (variant) {
-    case 'centered':
+    case "centered":
       return {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         backgroundColor: theme.colors.background,
       };
-    case 'padded':
+    case "padded":
       return {
         flex: 1,
         padding: 20,
@@ -32,8 +33,8 @@ const getVariantStyles = (variant: MainVariant, theme: any): ViewStyle => {
   }
 };
 
-export const Main = ({ children, variant = 'default', style }: MainProps) => {
-  const theme = useTheme();
+export const Main = ({ children, variant = "default", style }: MainProps) => {
+  const theme = useTheme<AppTheme>();
   const variantStyles = getVariantStyles(variant, theme);
 
   return (
@@ -41,4 +42,4 @@ export const Main = ({ children, variant = 'default', style }: MainProps) => {
       {children}
     </View>
   );
-}; 
+};

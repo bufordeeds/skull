@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { ImageBackground, StyleSheet } from "react-native";
 import { Surface } from "react-native-paper";
 import { Main } from "../atoms/Main";
 import { Button } from "../atoms/Button";
@@ -9,7 +9,7 @@ const WelcomePage = () => {
   return (
     <Main>
       <ImageBackground
-        source={require("@/assets/images/background.jpg")}
+        source={require("@/assets/images/background.webp")}
         style={styles.background}
         resizeMode="cover"
       >
@@ -19,7 +19,7 @@ const WelcomePage = () => {
           </Text>
 
           <Text variant="bodyMedium" style={styles.subtitle}>
-            Where Life Meets Death
+            Bet bet bet
           </Text>
 
           <Button variant="primary" onPress={() => {}} style={styles.button}>

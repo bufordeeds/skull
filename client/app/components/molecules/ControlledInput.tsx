@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, Control, FieldValues, Path } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { Text } from "../atoms/Text";
 import { TextInput } from "../atoms/TextInput";
 import { StyleSheet } from "react-native";
@@ -55,9 +55,7 @@ export const ControlledInput = <T extends FieldValues>({
             style={styles.input}
             error={!!error}
           />
-          {error && (
-            <Text style={styles.errorText}>{error.message}</Text>
-          )}
+          {error && <Text style={styles.errorText}>{error.message}</Text>}
         </>
       )}
     />

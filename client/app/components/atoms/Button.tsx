@@ -1,6 +1,6 @@
 import {
-  ButtonProps as PaperButtonProps,
   Button as PaperButton,
+  ButtonProps as PaperButtonProps,
 } from "react-native-paper";
 import { StyleSheet } from "react-native";
 

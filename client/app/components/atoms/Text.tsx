@@ -1,7 +1,7 @@
 import {
-  TextProps as PaperTextProps,
-  Text as PaperText,
   MD3TypescaleKey,
+  Text as PaperText,
+  TextProps as PaperTextProps,
 } from "react-native-paper";
 import { StyleSheet } from "react-native";
 

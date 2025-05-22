@@ -1,7 +1,7 @@
 import {
   TextInput as PaperTextInput,
-  TextInputProps as PaperTextInputProps,
   TextInputIconProps,
+  TextInputProps as PaperTextInputProps,
 } from "react-native-paper";
 import { useState } from "react";
 export interface TextInputProps extends PaperTextInputProps {

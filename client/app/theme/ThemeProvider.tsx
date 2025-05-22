@@ -1,6 +1,6 @@
-import React from 'react';
-import { PaperProvider } from 'react-native-paper';
-import { darkTheme } from './themes';
+import React from "react";
+import { PaperProvider } from "react-native-paper";
+import { darkTheme } from "./themes";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -15,6 +15,6 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       {children}
     </PaperProvider>
   );
-}; 
+};
 
 export default ThemeProvider;

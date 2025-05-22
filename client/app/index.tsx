@@ -1,5 +1,10 @@
-import LoginPage from "./components/pages/LoginPage";
+import WelcomePage from "./components/pages/WelcomePage";
+import ThemeProvider from "./theme/ThemeProvider";
 
 export default function Index() {
-  return <LoginPage />;
+  return (
+    <ThemeProvider>
+      <WelcomePage />
+    </ThemeProvider>
+  );
 }

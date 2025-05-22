@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "check": "deno fmt && deno lint",
-    "client": "deno task --cwd=client dev",
+    "client": "npm --prefix client run dev",
     "commit": "git-cz",
     "fmt": "deno fmt",
     "lint": "deno lint",

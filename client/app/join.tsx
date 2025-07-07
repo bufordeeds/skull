@@ -1,34 +1,47 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { router } from 'expo-router';
 import Container from '../src/components/Container';
 import Header from '../src/components/Header';
 import Button from '../src/components/Button';
+import LoadingOverlay from '../src/components/LoadingOverlay';
 import { colors, typography, spacing } from '../src/constants/theme';
+import { useGame } from '../src/context/GameContext';
 
 export default function JoinGameScreen() {
 	const [playerName, setPlayerName] = useState('');
 	const [roomCode, setRoomCode] = useState('');
-	const [isJoining, setIsJoining] = useState(false);
-	const [error, setError] = useState('');
+	const [localError, setLocalError] = useState('');
+	const { joinRoom, loading, error } = useGame();
 
-	const handleJoinGame = () => {
+	// Handle errors from the game context
+	useEffect(() => {
+		if (error) {
+			setLocalError(error);
+		}
+	}, [error]);
+
+	const handleJoinGame = async () => {
 		if (!playerName.trim() || !roomCode.trim()) return;
 
-		setIsJoining(true);
-		setError('');
+		setLocalError('');
 
-		// TODO: Implement game joining logic with socket.io
-		// For now, just navigate to the lobby screen after a delay
-		setTimeout(() => {
-			setIsJoining(false);
+		try {
+			// Join room using the game context
+			await joinRoom(roomCode, playerName);
+
+			// Navigate to lobby on success
 			router.push('/lobby');
-		}, 1000);
+		} catch (err) {
+			// Error is handled by the game context and displayed via the useEffect above
+			console.error('Failed to join room:', err);
+		}
 	};
 
 	return (
 		<Container>
 			<Header title='Join Game' showBackButton />
+			<LoadingOverlay visible={loading} text='Joining game...' />
 
 			<View style={styles.content}>
 				<Text style={styles.label}>Room Code</Text>
@@ -37,7 +50,7 @@ export default function JoinGameScreen() {
 					value={roomCode}
 					onChangeText={(text) => {
 						setRoomCode(text.toUpperCase());
-						setError('');
+						setLocalError('');
 					}}
 					placeholder='Enter room code'
 					placeholderTextColor={colors.darkGray}
@@ -56,14 +69,18 @@ export default function JoinGameScreen() {
 					maxLength={20}
 				/>
 
-				{error ? <Text style={styles.errorText}>{error}</Text> : null}
+				{localError ? (
+					<Text style={styles.errorText}>{localError}</Text>
+				) : null}
 
 				<View style={styles.buttonContainer}>
 					<Button
 						title='Join Game'
 						onPress={handleJoinGame}
-						disabled={!playerName.trim() || !roomCode.trim()}
-						loading={isJoining}
+						disabled={
+							!playerName.trim() || !roomCode.trim() || loading
+						}
+						loading={loading}
 						fullWidth
 					/>
 				</View>

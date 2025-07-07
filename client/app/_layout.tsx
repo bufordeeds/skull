@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { SplashScreen } from 'expo-router';
+import { GameProvider } from '../src/context/GameContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete
 SplashScreen.preventAutoHideAsync();
@@ -29,12 +30,18 @@ export default function RootLayout() {
 	}
 
 	return (
-		<Stack
-			screenOptions={{
-				headerShown: false,
-				contentStyle: { backgroundColor: '#2D1B40' },
-				animation: 'fade'
-			}}
-		/>
+		<GameProvider>
+			<Stack
+				screenOptions={{
+					headerShown: false,
+					contentStyle: { backgroundColor: '#2D1B40' },
+					animation: 'slide_from_right',
+					animationDuration: 300,
+					gestureEnabled: true,
+					gestureDirection: 'horizontal',
+					presentation: 'card'
+				}}
+			/>
+		</GameProvider>
 	);
 }

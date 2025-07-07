@@ -1,30 +1,43 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { router } from 'expo-router';
 import Container from '../src/components/Container';
 import Header from '../src/components/Header';
 import Button from '../src/components/Button';
+import LoadingOverlay from '../src/components/LoadingOverlay';
 import { colors, typography, spacing } from '../src/constants/theme';
+import { useGame } from '../src/context/GameContext';
 
 export default function CreateGameScreen() {
 	const [playerName, setPlayerName] = useState('');
-	const [isCreating, setIsCreating] = useState(false);
+	const { createRoom, loading, error } = useGame();
 
-	const handleCreateGame = () => {
+	// Handle errors
+	useEffect(() => {
+		if (error) {
+			Alert.alert('Error', error);
+		}
+	}, [error]);
+
+	const handleCreateGame = async () => {
 		if (!playerName.trim()) return;
 
-		setIsCreating(true);
-		// TODO: Implement game creation logic with socket.io
-		// For now, just navigate to the lobby screen after a delay
-		setTimeout(() => {
-			setIsCreating(false);
+		try {
+			// Create room using the game context
+			await createRoom(playerName);
+
+			// Navigate to lobby on success
 			router.push('/lobby');
-		}, 1000);
+		} catch (err) {
+			// Error is handled by the game context and displayed via the useEffect above
+			console.error('Failed to create room:', err);
+		}
 	};
 
 	return (
 		<Container>
 			<Header title='Create Game' showBackButton />
+			<LoadingOverlay visible={loading} text='Creating game...' />
 
 			<View style={styles.content}>
 				<Text style={styles.label}>Your Name</Text>
@@ -42,8 +55,8 @@ export default function CreateGameScreen() {
 					<Button
 						title='Create Game'
 						onPress={handleCreateGame}
-						disabled={!playerName.trim()}
-						loading={isCreating}
+						disabled={!playerName.trim() || loading}
+						loading={loading}
 						fullWidth
 					/>
 				</View>

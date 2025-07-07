@@ -1,88 +1,108 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	View,
 	Text,
 	StyleSheet,
 	FlatList,
 	Share,
-	TouchableOpacity
+	TouchableOpacity,
+	Alert
 } from 'react-native';
 import { router } from 'expo-router';
 import Container from '../src/components/Container';
 import Header from '../src/components/Header';
 import Button from '../src/components/Button';
+import LoadingOverlay from '../src/components/LoadingOverlay';
+import AnimatedPlayerItem from '../src/components/AnimatedPlayerItem';
 import { colors, typography, spacing } from '../src/constants/theme';
-
-// Mock data for testing
-const MOCK_ROOM_CODE = 'ABC123';
-const MOCK_PLAYERS = [
-	{ id: '1', name: 'You', isReady: true, isHost: true },
-	{ id: '2', name: 'Player 2', isReady: false, isHost: false },
-	{ id: '3', name: 'Player 3', isReady: true, isHost: false }
-];
+import { useGame } from '../src/context/GameContext';
+import { Player } from '../src/services/socketService';
 
 export default function LobbyScreen() {
-	const [players, setPlayers] = useState(MOCK_PLAYERS);
-	const [isReady, setIsReady] = useState(false);
-	const [isStarting, setIsStarting] = useState(false);
+	const { room, player, loading, error, setReady, startGame, leaveRoom } =
+		useGame();
 
-	const allPlayersReady = players.every((player) => player.isReady);
-	const isHost = players.find((player) => player.id === '1')?.isHost;
+	// Handle errors
+	useEffect(() => {
+		if (error) {
+			Alert.alert('Error', error);
+		}
+	}, [error]);
 
-	const handleReadyToggle = () => {
-		setIsReady(!isReady);
-		// Update the current player's ready status
-		setPlayers(
-			players.map((player) =>
-				player.id === '1' ? { ...player, isReady: !isReady } : player
-			)
+	// Redirect to home if no room data is available
+	useEffect(() => {
+		if (!room && !loading) {
+			router.replace('/');
+		}
+	}, [room, loading]);
+
+	// If room or player is not available, show loading
+	if (!room || !player) {
+		return (
+			<Container>
+				<Header title='Game Lobby' showBackButton />
+				<LoadingOverlay visible={true} text='Loading lobby...' />
+			</Container>
 		);
+	}
+
+	const allPlayersReady = room.players.every((p) => p.isReady);
+	const isHost = player.isHost;
+
+	const handleReadyToggle = async () => {
+		try {
+			await setReady(!player.isReady);
+		} catch (err) {
+			console.error('Failed to set ready status:', err);
+		}
 	};
 
-	const handleStartGame = () => {
-		setIsStarting(true);
-		// TODO: Implement game start logic with socket.io
-		// For now, just navigate to the game screen after a delay
-		setTimeout(() => {
-			setIsStarting(false);
+	const handleStartGame = async () => {
+		try {
+			await startGame();
 			router.push('/game');
-		}, 1000);
+		} catch (err) {
+			console.error('Failed to start game:', err);
+		}
+	};
+
+	const handleLeaveRoom = async () => {
+		try {
+			await leaveRoom();
+			router.replace('/');
+		} catch (err) {
+			console.error('Failed to leave room:', err);
+		}
 	};
 
 	const handleShareCode = async () => {
 		try {
 			await Share.share({
-				message: `Join my Skull game with code: ${MOCK_ROOM_CODE}`
+				message: `Join my Skull game with code: ${room.code}`
 			});
 		} catch (error) {
 			console.error('Error sharing room code:', error);
 		}
 	};
 
-	const renderPlayer = ({ item }: { item: (typeof MOCK_PLAYERS)[0] }) => (
-		<View style={styles.playerItem}>
-			<View style={styles.playerInfo}>
-				<Text style={styles.playerName}>
-					{item.name} {item.isHost ? '(Host)' : ''}
-				</Text>
-				{item.isReady ? (
-					<Text style={styles.readyText}>Ready</Text>
-				) : (
-					<Text style={styles.notReadyText}>Not Ready</Text>
-				)}
-			</View>
-		</View>
+	const renderPlayer = ({ item }: { item: Player }) => (
+		<AnimatedPlayerItem player={item} />
 	);
 
 	return (
 		<Container>
-			<Header title='Game Lobby' showBackButton />
+			<Header
+				title='Game Lobby'
+				showBackButton
+				onBackPress={handleLeaveRoom}
+			/>
+			<LoadingOverlay visible={loading} text='Loading...' />
 
 			<View style={styles.content}>
 				<View style={styles.roomCodeContainer}>
 					<Text style={styles.roomCodeLabel}>Room Code:</Text>
 					<View style={styles.roomCodeWrapper}>
-						<Text style={styles.roomCode}>{MOCK_ROOM_CODE}</Text>
+						<Text style={styles.roomCode}>{room.code}</Text>
 						<TouchableOpacity
 							onPress={handleShareCode}
 							style={styles.shareButton}
@@ -94,7 +114,7 @@ export default function LobbyScreen() {
 
 				<Text style={styles.sectionTitle}>Players</Text>
 				<FlatList
-					data={players}
+					data={room.players}
 					renderItem={renderPlayer}
 					keyExtractor={(item) => item.id}
 					style={styles.playerList}
@@ -106,15 +126,17 @@ export default function LobbyScreen() {
 						<Button
 							title='Start Game'
 							onPress={handleStartGame}
-							disabled={!allPlayersReady || players.length < 2}
-							loading={isStarting}
+							disabled={
+								!allPlayersReady || room.players.length < 2
+							}
+							loading={loading}
 							fullWidth
 						/>
 					) : (
 						<Button
-							title={isReady ? 'Not Ready' : 'Ready'}
+							title={player.isReady ? 'Not Ready' : 'Ready'}
 							onPress={handleReadyToggle}
-							variant={isReady ? 'outline' : 'primary'}
+							variant={player.isReady ? 'outline' : 'primary'}
 							fullWidth
 						/>
 					)}
@@ -128,6 +150,19 @@ const styles = StyleSheet.create({
 	content: {
 		flex: 1,
 		paddingHorizontal: spacing.lg
+	},
+	simulateButton: {
+		width: 30,
+		height: 30,
+		borderRadius: 15,
+		backgroundColor: colors.teal,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	simulateButtonText: {
+		color: colors.boneWhite,
+		fontSize: typography.fontSizeMD,
+		fontWeight: 'bold'
 	},
 	roomCodeContainer: {
 		marginBottom: spacing.xl

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Socket.io Connection Test</title>
+		<script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+			.container {
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+			}
+			.card {
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				padding: 20px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+			.button {
+				background-color: #4caf50;
+				border: none;
+				color: white;
+				padding: 10px 20px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 16px;
+				margin: 4px 2px;
+				cursor: pointer;
+				border-radius: 4px;
+			}
+			.button:disabled {
+				background-color: #cccccc;
+				cursor: not-allowed;
+			}
+			.success {
+				color: green;
+				font-weight: bold;
+			}
+			.error {
+				color: red;
+				font-weight: bold;
+			}
+			.log {
+				background-color: #f5f5f5;
+				padding: 10px;
+				border-radius: 4px;
+				font-family: monospace;
+				white-space: pre-wrap;
+				max-height: 300px;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="card">
+				<h1>Socket.io Connection Test</h1>
+				<p>This page tests the connection to the socket.io server.</p>
+
+				<div>
+					<label for="server-url">Server URL:</label>
+					<input
+						type="text"
+						id="server-url"
+						value="http://192.168.1.68:3000"
+						style="width: 300px"
+					/>
+				</div>
+
+				<div style="margin-top: 20px">
+					<button id="connect-btn" class="button">Connect</button>
+					<button id="disconnect-btn" class="button" disabled>
+						Disconnect
+					</button>
+				</div>
+
+				<div style="margin-top: 20px">
+					<h3>
+						Connection Status: <span id="status">Disconnected</span>
+					</h3>
+				</div>
+			</div>
+
+			<div class="card">
+				<h2>Connection Logs</h2>
+				<div id="logs" class="log"></div>
+			</div>
+		</div>
+
+		<script>
+			let socket = null;
+			const serverUrlInput = document.getElementById('server-url');
+			const connectBtn = document.getElementById('connect-btn');
+			const disconnectBtn = document.getElementById('disconnect-btn');
+			const statusSpan = document.getElementById('status');
+			const logsDiv = document.getElementById('logs');
+
+			function log(message, type = 'info') {
+				const timestamp = new Date().toISOString();
+				const logEntry = document.createElement('div');
+				logEntry.className = type;
+				logEntry.textContent = `[${timestamp}] ${message}`;
+				logsDiv.appendChild(logEntry);
+				logsDiv.scrollTop = logsDiv.scrollHeight;
+			}
+
+			function updateStatus(connected) {
+				if (connected) {
+					statusSpan.textContent = 'Connected';
+					statusSpan.className = 'success';
+					connectBtn.disabled = true;
+					disconnectBtn.disabled = false;
+				} else {
+					statusSpan.textContent = 'Disconnected';
+					statusSpan.className = 'error';
+					connectBtn.disabled = false;
+					disconnectBtn.disabled = true;
+				}
+			}
+
+			connectBtn.addEventListener('click', () => {
+				const serverUrl = serverUrlInput.value.trim();
+				if (!serverUrl) {
+					log('Please enter a server URL', 'error');
+					return;
+				}
+
+				try {
+					log(`Attempting to connect to ${serverUrl}...`);
+
+					// Create socket connection with various options
+					socket = io(serverUrl, {
+						reconnectionAttempts: 5,
+						timeout: 30000,
+						autoConnect: true,
+						transports: ['polling', 'websocket'],
+						upgrade: true,
+						forceNew: true,
+						reconnection: true,
+						reconnectionDelay: 1000,
+						reconnectionDelayMax: 5000,
+						randomizationFactor: 0.5,
+						path: '/socket.io/'
+					});
+
+					// Connection events
+					socket.on('connect', () => {
+						log(
+							`Connected to server with ID: ${socket.id}`,
+							'success'
+						);
+						updateStatus(true);
+					});
+
+					socket.on('connect_error', (error) => {
+						log(`Connection error: ${error.message}`, 'error');
+					});
+
+					socket.on('disconnect', (reason) => {
+						log(`Disconnected: ${reason}`);
+						updateStatus(false);
+					});
+
+					socket.on('reconnect_attempt', (attemptNumber) => {
+						log(`Reconnection attempt #${attemptNumber}...`);
+					});
+
+					socket.on('reconnect', (attemptNumber) => {
+						log(
+							`Reconnected after ${attemptNumber} attempts`,
+							'success'
+						);
+						updateStatus(true);
+					});
+
+					socket.on('reconnect_error', (error) => {
+						log(`Reconnection error: ${error.message}`, 'error');
+					});
+
+					socket.on('reconnect_failed', () => {
+						log(
+							'Failed to reconnect after multiple attempts',
+							'error'
+						);
+					});
+
+					// Additional debugging
+					socket.io.on('packet', (packet) => {
+						log(`Packet received: ${JSON.stringify(packet)}`);
+					});
+
+					socket.io.on('error', (error) => {
+						log(`Transport error: ${error}`, 'error');
+					});
+				} catch (error) {
+					log(`Error creating socket: ${error.message}`, 'error');
+				}
+			});
+
+			disconnectBtn.addEventListener('click', () => {
+				if (socket) {
+					log('Disconnecting from server...');
+					socket.disconnect();
+					socket = null;
+				}
+			});
+		</script>
+	</body>
+</html>
